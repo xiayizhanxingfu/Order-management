@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>客户端</title>
+        <script src="/test/js/jquery-3.4.1.js"></script>
+    </head>
+    <body>
+        <div id="container" style="text-align: center;">
+            <table id="info">
+                <tr id="thead">
+
+                </tr>
+            </table>
+            <button id="submit">提交订单</button><button id="look">查看订单</button>
+        </div>
+        <script type="text/javascript">
+            var baseUrl = "http://localhost:8080/test";
+            $(function () {
+                init();
+                $("#submit").on("click",submit);
+                $("#look").on("click",look);
+            });
+
+            function init() {
+                $.ajax({
+                    url: baseUrl+"/client/foodList",
+                    type: "GET",
+                    dataType: "json",
+                    success:function (json) {
+                        console.log(json);
+                        if (json.status === "error") {
+                            $("#container").innerText = "无信息";
+                        }else{
+                            var th="<th>编号</th>";
+                            th+="<th>名称</th>";
+                            th+="<th>图片</th>";
+                            th+="<th>价格</th>";
+                            th+="<th>优惠价格</th>";
+                            th+="<th>类别</th>";
+                            th+="<th>操作</th>";
+                            $("#thead").append($(th));
+
+                            for (var i = 0; i < json.foodList.length; i++) {
+                                var tr="<td>"+json.foodList[i].foodId+"</td>";
+                                tr+="<td>"+json.foodList[i].foodName+"</td>";
+                                tr+="<td>"+json.foodList[i].foodUrl+"</td>";
+                                tr+="<td>"+json.foodList[i].foodPrice+"</td>";
+                                if (json.foodList[i].foodDprice === 0) {
+                                    tr+="<td>"+0+"</td>";
+                                }else{
+                                    tr+="<td>"+json.foodList[i].foodDprice+"</td>";
+                                }
+                                tr+="<td>"+json.foodList[i].foodClassify.fcName+"</td>";
+                                tr+="<td><label><input type='checkbox'>加入购物车</label></td>";
+                                $("#info").append($("<tr>"+tr+"</tr>"));
+                            }
+                        }
+                    }
+                });
+            }
+            function submit() {
+                var ids = [];
+                var trs=$("label input:checked").parents("tr");
+                for (var i = 0; i < trs.length; i++) {
+                    ids[i]=$(trs[i]).find("td:first").text();
+                }
+                $.ajax({
+                    url: baseUrl+"/client/addOrderformList",
+                    type: "get",
+                    data:{
+                        id:ids
+                    },
+                    dataType: "json",
+                    success: function (json) {
+                        console.log(json);
+                        if (json.status === "ok") {
+                            alert("添加订单成功");
+                        }
+
+                    }
+                });
+            }
+            function look() {
+                window.location.href=baseUrl+"/client/orderformList.html";
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.OrderformDao">
+    <resultMap id="baseOrderformMap" type="orderform">
+        <id property="orderId" column="order_id"/>
+        <result property="size" column="size"/>
+        <!--订单状态,0:未付款,1:己付款,2未上菜,4:交易完成-->
+        <result property="status" column="status"/>
+        <result property="location" column="location"/>
+    </resultMap>
+    <resultMap id="userOrderform" type="orderform" extends="baseOrderformMap">
+        <association property="users" resultMap="com.dao.UsersDao.baseUsersMap"/>
+    </resultMap>
+    <resultMap id="foodOrderformMap" type="orderform" extends="baseOrderformMap">
+        <association property="food" resultMap="com.dao.FoodDao.foodMap"/>
+    </resultMap>
+    <resultMap id="orderformMap" type="orderform" extends="baseOrderformMap">
+        <association property="users" resultMap="com.dao.UsersDao.baseUsersMap"/>
+        <association property="food" resultMap="com.dao.FoodDao.foodMap"/>
+    </resultMap>
+
+    <insert id="insert" keyColumn="order_id" useGeneratedKeys="true">
+        insert into orderform(users_id, food_id, size, status)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.users.usersId},#{item.food.foodId},#{item.size},#{item.status})
+        </foreach>
+    </insert>
+
+    <select id="selectAll" resultMap="foodOrderformMap">
+        select *
+        from orderform,
+             food,
+             foodclassify
+        where orderform.users_id = #{usersId}
+          and food.food_id = orderform.food_id
+          and food.food_classify = foodclassify.fc_id
+    </select>
+    <select id="selectFoodIdAndSize" resultMap="foodOrderformMap">
+        select orderform.size,food.food_id,orderform.order_id
+        from orderform,
+        food
+        where orderform.order_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item.orderId}
+        </foreach>
+        and orderform.food_id = food.food_id
+    </select>
+    <update id="updateStatutList">
+        update orderform
+        set status = 1,
+        size = case order_id
+        <foreach collection="list" item="item">
+            when #{item.orderId} then #{item.size}
+        </foreach>
+        end,
+        location = case order_id
+        <foreach collection="list" item="item">
+            when #{item.orderId} then #{item.location}
+        </foreach>
+        end
+        where order_id in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item.orderId}
+        </foreach>
+        and orderform.users_id = #{users.usersId}
+    </update>
+    <update id="updateStatut">
+        update orderform
+        set status = #{status}
+        where order_id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <script src="/test/js/jquery-3.4.1.js"></script>
+        <title>任务</title>
+    </head>
+    <body>
+        <div style="text-align: center;">
+            <table id="info">
+                <tr>
+                    <th>编号</th>
+                    <th>食物名称</th>
+                    <th>食物分类</th>
+                    <th>数量</th>
+                    <th>任务状态</th>
+                    <th>负责人</th>
+                    <th>操作</th>
+                </tr>
+            </table>
+        </div>
+        <script type="text/javascript">
+            var baseUrl = "http://localhost:8080/test";
+            $(function () {
+                init();
+            });
+
+            //初始化
+            function init() {
+                $.ajax({
+                        url: baseUrl + "/chef/taskList",
+                        type: "GET",
+                        dataType: "json",
+                        success: function (json) {
+                            console.log(json);
+                            if (json.status === "error") {
+                                alert("请登录");
+                                window.location.href = baseUrl;
+                            } else {
+                                if (json.taskList.length === 0) {
+                                    $("#info").remove();
+                                    $("div").text("暂无任务");
+                                } else {
+
+
+                                    for (var i = 0; i < json.taskList.length; i++) {
+                                        var td = "<td>" + json.taskList[i].taskId + "</td>";
+                                        td += "<td>" + json.taskList[i].orderform.food.foodName + "</td>";
+                                        td += "<td>" + json.taskList[i].orderform.food.foodClassify.fcName + "</td>";
+                                        td += "<td>" + json.taskList[i].size + "</td>";
+                                        var status = json.taskList[i].status;
+                                        switch (status) {
+                                            case 0:
+                                                status = "未领取";
+                                                break;
+                                            case 1:
+                                                status = "己领取";
+                                                break;
+                                            case 2:
+                                                status = "完成";
+                                                break;
+                                        }
+                                        td += "<td>" + status + "</td>";
+                                        td += "<td>" + json.taskList[i].functionary + "</td>";
+                                        status = json.taskList[i].status;
+                                        switch (status) {
+                                            case 0:
+                                                status = "<button>领取任务</button>";
+                                                break;
+                                            case 1:
+                                                status = "<button>取消任务</button><button>完成任务</button>";
+                                                break;
+                                            case 2:
+                                                status = "<button>删除任务</button>";
+                                                break;
+                                        }
+                                        td += "<td>" + status + "</td>";
+                                        $("#info").append($("<tr>" + td + "</tr>"));
+                                    }
+                                    $("table button").on("click", opertion);
+                                }
+                            }
+                        }
+                    }
+                );
+            }
+
+            //点击事件
+            function opertion() {
+                switch ($(this).text()) {
+                    case "领取任务":
+                        getTask($(this));
+                        break;
+                    case "取消任务":
+                        cancelTask($(this));
+                        break;
+                    case "完成任务":
+                        doneTask($(this));
+                        break;
+                }
+            }
+
+            //领取任务
+            function getTask(element) {
+                $.ajax({
+                    url: baseUrl + "/chef/getTask",
+                    type: "get",
+                    data: {
+                        id: element.parents("tr").find("td:first").text()
+                    },
+                    dataType: "json",
+                    success: function (json) {
+                        console.log(json);
+                        if (json.status === "ok") {
+                            alert("任务领取成功");
+                            window.location.href = baseUrl + "/chef/taskList.html";
+                        } else {
+                            alert("未知错误");
+                        }
+                    }
+                });
+            }
+
+            //取消任务
+            function cancelTask(element) {
+                $.ajax({
+                    url: baseUrl + "/chef/cancelTask",
+                    type: "get",
+                    data: {
+                        id: element.parents("tr").find("td:first").text()
+                    },
+                    dataType: "json",
+                    success: function (json) {
+                        console.log(json);
+                        if (json.status === "ok") {
+                            alert("任务取消成功");
+                            window.location.href = baseUrl + "/chef/taskList.html";
+                        } else {
+                            alert("未知错误");
+                        }
+                    }
+                });
+            }
+
+            //完成任务
+            function doneTask(element) {
+                $.ajax({
+                    url: baseUrl + "/chef/doneTask",
+                    type: "get",
+                    data: {
+                        id: element.parents("tr").find("td:first").text()
+                    },
+                    dataType: "json",
+                    success: function (json) {
+                        console.log(json);
+                        if (json.status === "ok") {
+                            alert("任务完成");
+                            window.location.href = baseUrl + "/chef/taskList.html";
+                        } else {
+                            alert("未知错误");
+                        }
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

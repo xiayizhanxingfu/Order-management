@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>register</title>
+        <script src="js/jquery-3.4.1.js"></script>
+    </head>
+    <body>
+        <div style="text-align: center;">
+            <label>userName:<input name="userName"></label><br>
+            <label>Password:<input name="userPwd" type="password"></label><br>
+            <label>again Password:<input name="againUserPwd" type="password"></label><br>
+            identity:
+            <label><input name="userIdentity" type="radio" value="1">厨师</label>
+            <label><input name="userIdentity" type="radio" value="2">服务员</label>
+            <label><input name="userIdentity" type="radio" value="3">客户</label>
+            <br>
+            <button id="register">注册</button>
+            <button id="back">返回登录</button>
+        </div>
+        <script type="text/javascript">
+            var baseUrl = "http://localhost:8080/test";
+            $(function () {
+                $("#register").on("click", register);
+                $("#back").on("click", back);
+            });
+
+            function register() {
+                if ($("[name='userName']").val() === '') {
+                    alert("昵称不能为空");
+                    return false;
+                }
+                if ($("[name='userPwd']").val() === '') {
+                    alert("密码不能为空");
+                    return false;
+                }
+                if ($("[name='againUserPwd']").val() === '') {
+                    alert("确认密码不能为空");
+                    return false;
+                }
+                if ($("[name='userPwd']").val() !== $("[name='againUserPwd']").val()) {
+                    alert("密码不一致");
+                    return false;
+                }
+                if (typeof ($("[name='userIdentity']:checked").val()) === 'undefined') {
+                    alert("请选择身份");
+                    return false;
+                }
+                $.ajax({
+                    url: "register",
+                    type: "POST",
+                    data: {
+                        userName: $("[name='userName']").val(),
+                        userPwd: $("[name='userPwd']").val(),
+                        userIdentity: $("[name='userIdentity']:checked").val()
+                    },
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.status === "ok") {
+                            alert("你的账号:" + json.account);
+                            window.location.href = baseUrl;
+                        } else {
+                            alert("注册失败");
+                        }
+                    }
+                });
+            }
+
+            function back() {
+                window.location.href = baseUrl;
+            }
+        </script>
+    </body>
+</html>

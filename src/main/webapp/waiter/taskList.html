@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <script src="/test/js/jquery-3.4.1.js"></script>
+        <title>任务</title>
+    </head>
+    <body>
+        <div style="text-align: center;">
+            <table id="info">
+                <tr>
+                    <th>订单号</th>
+                    <th>食物</th>
+                    <th>类别</th>
+                    <th>数量</th>
+                    <th>位置</th>
+                    <th>操作</th>
+                </tr>
+            </table>
+        </div>
+        <script type="text/javascript">
+            var baseUrl = "http://localhost:8080/test";
+            $(function () {
+                init();
+            });
+
+            function init() {
+                $.ajax({
+                    url: baseUrl + "/waiter/taskList",
+                    type: "get",
+                    dataType: "json",
+                    success: function (json) {
+                        console.log(json);
+                        if (json.taskList.length == 0) {
+                            $("#info").remove();
+                            $("div").text("暂无任务");
+                        } else {
+                            for (var i = 0; i < json.taskList.length; i++) {
+                                var td = "<td>" + json.taskList[i].orderform.orderId + "</td>";
+                                td += "<td>" + json.taskList[i].orderform.food.foodName + "</td>";
+                                td += "<td>" + json.taskList[i].orderform.food.foodClassify.fcName + "</td>";
+                                td += "<td>" + json.taskList[i].size + "</td>";
+                                td += "<td>" + json.taskList[i].orderform.location + "</td>";
+                                td += "<td><button>交易完成</button></td>";
+                                $("#info").append($("<tr>" + td + "</tr>"));
+                            }
+                            $("#info button").on("click", done);
+                        }
+                    }
+                });
+            }
+
+            function done() {
+                var id = $(this).parents("tr").find("td:first").text();
+                $.ajax({
+                    url: baseUrl + "/waiter/done",
+                    type: "GET",
+                    data: {
+                        id: id
+                    },
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.status === "ok") {
+                            window.location.href = baseUrl + "/waiter/taskList.html";
+                        } else {
+                            alert("错误");
+                        }
+                    }
+                })
+            }
+        </script>
+    </body>
+</html>

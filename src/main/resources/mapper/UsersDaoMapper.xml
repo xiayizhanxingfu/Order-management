@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UsersDao">
+
+    <resultMap id="baseUsersMap" type="users">
+        <id property="usersId" column="users_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userAccount" column="user_account"/>
+        <result property="userPwd" column="user_pwd"/>
+        <result property="userIdentity" column="user_identity"/>
+    </resultMap>
+
+    <select id="login" parameterType="users" resultMap="baseUsersMap">
+        select *
+        from users
+        where user_account = #{userAccount}
+          and user_pwd = #{userPwd}
+          and user_identity = #{userIdentity}
+    </select>
+    <select id="selectByLast" resultMap="baseUsersMap">
+        select *
+        from users
+        order by users_id desc
+        limit 1
+    </select>
+
+    <insert id="insert" parameterType="users" useGeneratedKeys="true" keyColumn="users_id">
+        insert into users(user_name, user_account, user_pwd, user_identity)
+        VALUES (#{userName}, #{userAccount}, #{userPwd}, #{userIdentity})
+    </insert>
+</mapper>

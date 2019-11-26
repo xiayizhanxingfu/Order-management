@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.FoodDao">
+    <resultMap id="baseFoodMap" type="food">
+        <id property="foodId" column="food_id"/>
+        <result property="foodName" column="food_name"/>
+        <result property="foodUrl" column="food_url"/>
+        <result property="foodPrice" column="food_price"/>
+        <result property="foodDprice" column="food_dprice"/>
+        <result property="foodIsChara" column="food_isChara"/>
+    </resultMap>
+    <resultMap id="foodMap" type="food" extends="baseFoodMap">
+        <association property="foodClassify" resultMap="com.dao.FoodclassifyDao.baseFoodclassifyMap"></association>
+    </resultMap>
+
+    <select id="selectAll" resultMap="foodMap">
+        select *
+        from food,
+             foodclassify
+        where food.food_classify = foodclassify.fc_id
+    </select>
+</mapper>

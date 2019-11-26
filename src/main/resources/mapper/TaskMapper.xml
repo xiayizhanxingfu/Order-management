@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.TaskDao">
+
+    <resultMap id="baseTaskMap" type="task">
+        <id property="taskId" column="task_id"/>
+        <result property="status" column="status"/>
+        <result property="functionary" column="functionary"/>
+        <result property="size" column="size"/>
+    </resultMap>
+    <resultMap id="taskMap" type="task" extends="baseTaskMap">
+        <association property="orderform" resultMap="com.dao.OrderformDao.orderformMap"/>
+    </resultMap>
+
+    <insert id="insertAll" useGeneratedKeys="true" keyColumn="task_id">
+        insert into task(status, functionary, food_id, size,users_id,order_id)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (default,default,#{item.food.foodId},#{item.size},#{users.usersId},#{item.orderId})
+        </foreach>
+    </insert>
+
+    <select id="selectAll" resultMap="taskMap">
+        select food.*, foodclassify.*, task.task_id, task.status, task.functionary, task.size
+        from food,
+             foodclassify,
+             task
+        where food.food_id = task.food_id
+          and food.food_classify = foodclassify.fc_id
+          and task.status != 2
+
+    </select>
+    <select id="getOrderId" resultType="int">
+        select task.order_id
+        from task
+        where task.task_id = #{id}
+    </select>
+    <select id="selectAllByStatus" resultMap="taskMap">
+        select *
+        from food,
+             foodclassify,
+             task,
+             orderform
+        where food.food_id = task.food_id
+          and food.food_classify = foodclassify.fc_id
+          and task.status = #{status}
+          and orderform.status != 3
+          and orderform.order_id = task.order_id
+    </select>
+
+    <update id="updateGetTask">
+        update task
+        set task.status      = 1,
+            task.functionary = #{users.userName}
+        where task.task_id = #{id}
+    </update>
+    <update id="updateCancelTask">
+        update task
+        set task.status      = 0,
+            task.functionary ='无'
+        where task.task_id = #{id}
+    </update>
+    <update id="updateDoneTask">
+        update task
+        set task.status= 2,
+            task.functionary =#{users.userName}
+        where task.task_id = #{id}
+    </update>
+</mapper>
