@@ -2,6 +2,7 @@ package com.service;
 
 import com.bean.Orderform;
 import com.bean.Users;
+import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,11 +20,14 @@ public interface OrderformService {
 
     /**
      * 获取订单
-     *
+     * @param pageNum 页数
+     * @param key 关键字
+     * @param sort 排序
+     * @param status 状态 -1:全部;0:未付款;1:己付款;2:未上菜
      * @param users 用户信息
      * @return 订单列表
      */
-    List<Orderform> getOrderformList(Users users);
+    PageInfo<Orderform> getOrderformList(int pageNum, String key, int sort, int status, Users users);
 
     /**
      * 修改订单状态
@@ -31,7 +35,7 @@ public interface OrderformService {
      * @param id     任务编号
      * @param status 订单状态
      */
-    void updateStatut(@Param("id") int id, @Param("status") int status);
+    void updateStatut(int[] id, int status);
 
     /**
      * 付款
@@ -46,5 +50,5 @@ public interface OrderformService {
      *
      * @param id 订单编号
      */
-    void doneTask(int id);
+    void doneTask(int[] id);
 }

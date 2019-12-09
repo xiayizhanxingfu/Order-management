@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>buy</title>
+        <script src="/test/js/jquery-3.4.1.js"></script>
+        <script src="/test/js/function.js"></script>
+        <link href="/test/css/shopping.css" rel="stylesheet" type="text/css">
+
+    </head>
+    <body>
+        <div id="head">
+            <div id="navigation">
+                <ul>
+                    <a href="/test/client/index.html">
+                        <li>首页</li>
+                    </a>
+                    <a href="/test/client/shopping.html">
+                        <li>购物</li>
+                    </a>
+                    <a href="/test/client/shoppingCar.html">
+                        <li>购物车</li>
+                    </a>
+                    <a href="/test/client/tradingRecord.html">
+                        <li>交易记录</li>
+                    </a>
+                    <a>
+                        <li>关于我们</li>
+                    </a>
+                </ul>
+                <div id="user">
+                    <img src="/test/img/head.jpg">
+                    <div>
+                        <p></p>
+                        <div>
+                            <p id="login">登录</p>
+                            <p id="exit">注销</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="contextBody">
+            <div id="right">
+                <div id="search">
+                    <label><input type="text" placeholder="关键字"></label>
+                    <label><input type="radio" name="sort" value="-1">价格降序</label>
+                    <label><input type="radio" name="sort" value="1" checked="checked">价格升序</label>
+                    <label id="startSearch">查找</label>
+                    <label id="add">加入购物车</label>
+                </div>
+                <div id="shopList">
+                    <ul>
+                        <!--                        <li>-->
+                        <!--                            <div>-->
+                        <!--                                <div><img src="/test/img/cai.jpg"></div>-->
+                        <!--                                <p>牛肉菜</p>-->
+                        <!--                                <span>￥69.9</span>-->
+                        <!--                                <del>￥69.9</del>-->
+                        <!--                                <label><input type="checkbox" name="check">添加</label>-->
+                        <!--                            </div>-->
+                        <!--                        </li>-->
+                    </ul>
+                </div>
+                <div class="page">
+                    <!--                    <span>上一页</span>-->
+                    <!--                    <a href="#">1</a>-->
+                    <!--                    <a href="#">2</a>-->
+                    <!--                    <a href="#">3</a>-->
+                    <!--                    <a href="#">4</a>-->
+                    <!--                    <a href="#">5</a>-->
+                    <!--                    <a href="#">6</a>-->
+                    <!--                    <a href="#">7</a>-->
+                    <!--                    <a href="#">8</a>-->
+                    <!--                    <span>下一页</span>-->
+                </div>
+            </div>
+            <div id="left">
+                <ul>
+                    <li data="0">分类查看</li>
+                    <div>
+                        <li>1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+        <!--        <div id="add">-->
+        <!--            添加-->
+        <!--        </div>-->
+        <div id="foot">
+            <p>联系我们</p>
+            <p>了解更多的产品请拨打:400 888 8888 | 咨询服务请拨打:400 999 9999</p>
+        </div>
+        <script type="application/javascript">
+            $(function () {
+                init();
+                shopList(1);
+                classifyList();
+                $("#startSearch").on("click", shopList);
+                $("#add").on("click", addOrderform);
+            });
+
+            //商品列表
+            function shopList(page) {
+                if (typeof page === "object") {
+                    page = 1;
+                }
+                $.ajax({
+                    url: baseUrl + "client/foodPage",
+                    type: "POST",
+                    data: {
+                        "key": $("#search label input").val(),
+                        "sort": $("[name=sort]:checked").val(),
+                        "page": page,
+                        "classify": $("#left > ul:nth-child(1) > li:nth-child(1)").attr("data")
+                    },
+                    dataType: "JSON",
+                    success: function (json) {
+                        console.log(json);
+                        if (json.status === "error") {
+                            setCookie("users", '', -1);
+                            $("#user > div:nth-child(2) > p:nth-child(1)").text('请登录');
+                        } else {
+                            //商品列表
+                            //清空原来信息
+                            $("#shopList ul *").remove();
+                            var view = "";
+                            for (var i = 0; i < json.pageinfo.list.length; i++) {
+                                var img = "<div><img src='" + json.pageinfo.list[i].foodUrl + "'></div>";
+                                var name = "<p>" + json.pageinfo.list[i].foodName + "</p>";
+                                var price = "<span>￥" + json.pageinfo.list[i].foodPrice + "</span>";
+                                var dprice = "<del>￥" + json.pageinfo.list[i].foodDprice + "</del>";
+                                var add = "<input type='checkbox' name='check' value='"+json.pageinfo.list[i].foodId+"'>";
+                                view += "<li><div><label>" +add+ img + name + price + dprice + "</label></div></li>";
+                            }
+                            $("#shopList ul").append(view);
+                            //分页列表
+                            //清空原来信息
+                            $(".page *").remove();
+                            $(".page").append(pageinfoView(json));
+                            //分页绑定点击事件
+                            $(".page *").on("click", function () {
+                                shopList($(this).attr("page"));
+                            });
+                        }
+                    }
+                });
+            }
+
+            //添加商品到购物车
+            function addOrderform() {
+                var checkboxs = $("#shopList > ul  li > div > label > input:checked");
+                if (checkboxs.length === 0) {
+                    alert("请选择商品");
+                    return false;
+                }
+                var ids = [];
+                for (var i = 0; i < checkboxs.length; i++) {
+                    ids[i] = $(checkboxs[i]).val();
+                }
+                console.log(ids);
+                $.ajax({
+                    url: baseUrl + "client/addOrderformList",
+                    type: "get",
+                    data: {
+                        id: ids
+                    },
+                    dataType: "json",
+                    success: function (json) {
+                        console.log(json);
+                        if (json.status === "ok") {
+                            alert("添加订单成功");
+                        }
+                    }
+                });
+            }
+
+            //分类列表
+            function classifyList() {
+                $.ajax({
+                    url: baseUrl+"client/foodclassifys",
+                    dataType: "JSON",
+                    success: function (json) {
+                        console.log(json);
+                        if (json.status === "error") {
+
+                        } else {
+                            $("#left  ul  div *").remove();
+                            var view = "<li data='0'>全部</li>";
+                            for (var i = 0; i < json.foodListByFoodclassify.length; i++) {
+                                view+="<li data='"+json.foodListByFoodclassify[i].fcId+"'>"+json.foodListByFoodclassify[i].fcName+"</li>";
+                            }
+                            console.log(view);
+                            $("#left  ul  div").append(view);
+                            $("#left ul div li").on("click",function () {
+                                $(this).parent("div").prev("li").attr("data",$(this).attr("data"))
+                                shopList(1);
+                            });
+                        }
+
+                    }
+                });
+
+            }
+        </script>
+    </body>
+</html>

@@ -18,7 +18,24 @@
     <select id="selectAll" resultMap="foodMap">
         select *
         from food,
-             foodclassify
+        foodclassify
         where food.food_classify = foodclassify.fc_id
+        <if test="key!=''">
+            and food_name like "%"#{key}"%"
+        </if>
+        <choose>
+            <when test="foodClassify!=0">
+                and foodclassify.fc_id=#{foodClassify}
+            </when>
+        </choose>
+        order by food_price
+        <choose>
+            <when test="sort>0">
+                asc
+            </when>
+            <otherwise>
+                desc
+            </otherwise>
+        </choose>
     </select>
 </mapper>

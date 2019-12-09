@@ -1,0 +1,12 @@
+INSERT INTO diningroom.orderform (order_id, users_id, food_id, size, status, location) VALUES (105, 2, 16, 1, 3, '1010');
+INSERT INTO diningroom.orderform (order_id, users_id, food_id, size, status, location) VALUES (106, 2, 16, 1, 2, '111');
+INSERT INTO diningroom.orderform (order_id, users_id, food_id, size, status, location) VALUES (107, 2, 2, 1, 2, '111');
+INSERT INTO diningroom.orderform (order_id, users_id, food_id, size, status, location) VALUES (108, 2, 6, 1, 2, '111');
+INSERT INTO diningroom.orderform (order_id, users_id, food_id, size, status, location) VALUES (109, 2, 16, 1, 2, '22');
+INSERT INTO diningroom.orderform (order_id, users_id, food_id, size, status, location) VALUES (110, 2, 2, 1, 1, '22');
+INSERT INTO diningroom.orderform (order_id, users_id, food_id, size, status, location) VALUES (111, 2, 19, 1, 0, '无');
+INSERT INTO diningroom.orderform (order_id, users_id, food_id, size, status, location) VALUES (112, 2, 12, 1, 0, '无');
+INSERT INTO diningroom.orderform (order_id, users_id, food_id, size, status, location) VALUES (113, 2, 13, 2, 1, '1010');
+INSERT INTO diningroom.orderform (order_id, users_id, food_id, size, status, location) VALUES (114, 2, 19, 1, 0, '无');
+INSERT INTO diningroom.orderform (order_id, users_id, food_id, size, status, location) VALUES (115, 2, 12, 1, 0, '无');
+INSERT INTO diningroom.orderform (order_id, users_id, food_id, size, status, location) VALUES (116, 2, 13, 1, 0, '无');

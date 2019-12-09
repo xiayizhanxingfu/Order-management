@@ -4,23 +4,148 @@
         <meta charset="UTF-8">
         <title>register</title>
         <script src="js/jquery-3.4.1.js"></script>
+        <style type="text/css">
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                background-image: url('img/bc7.jpg');
+                background-size: 100% 100%;
+            }
+
+            .container {
+                width: 100%;
+                /*height: 600px;*/
+
+            }
+
+            #info {
+                height: 260px;
+                margin-top: 300px;
+                margin-left: 60%;
+                padding: 50px;
+                text-align: center;
+                width: 250px;
+                background: rgba(40, 218, 255, 0.4);
+                border-radius: 20px;
+            }
+
+            #info > svg {
+                margin-top: -150px;
+            }
+
+            #info > div > input {
+                width: 200px;
+                height: 30px;
+                line-height: 30px;
+                border-radius: 20px;
+                border: none;
+                text-indent: 35px;
+                margin-top: 10px;
+            }
+
+            #info > div > svg {
+                position: absolute;
+                background-position: 20px 20px;
+                margin-top: 13px;
+                margin-left: 10px;
+                width: 25px;
+                height: 25px;
+            }
+
+            #info > div {
+                margin-top: 10px;
+                color: white;
+            }
+
+            .radio {
+                width: 25px;
+                text-align: center;
+                vertical-align: center;
+            }
+
+            #register {
+                border-radius: 20px;
+                color: white;
+                height: 30px;
+                border: none;
+                background-color: cornflowerblue;
+                margin-top: 10px;
+                width: 200px;
+            }
+
+            #back {
+                border-radius: 20px;
+                color: white;
+                height: 30px;
+                border: none;
+                background-color: cornflowerblue;
+                margin-top: 10px;
+                width: 200px;
+            }
+        </style>
     </head>
     <body>
-        <div style="text-align: center;">
-            <label>userName:<input name="userName"></label><br>
-            <label>Password:<input name="userPwd" type="password"></label><br>
-            <label>again Password:<input name="againUserPwd" type="password"></label><br>
-            identity:
-            <label><input name="userIdentity" type="radio" value="1">厨师</label>
-            <label><input name="userIdentity" type="radio" value="2">服务员</label>
-            <label><input name="userIdentity" type="radio" value="3">客户</label>
-            <br>
-            <button id="register">注册</button>
-            <button id="back">返回登录</button>
+        <div class="container">
+            <div id="info">
+                <svg t="1574816204077" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg" p-id="3969" width="100" height="100">
+                    <path d="M477.568638 55.146624c-152.265644 0-275.699255 123.433611-275.699255 275.676677 0 152.276933 123.433611 275.733122 275.699255 275.733122 76.121533 0 137.849627 61.716806 137.849627 137.849627 0 76.087666-61.739384 137.804471-137.849627 137.804472-228.375887 0-413.537593-185.139128-413.537593-413.526305C64.019756 240.297041 249.181461 55.146624 477.568638 55.146624z"
+                          p-id="3970" fill="#1296db"></path>
+                    <path d="M546.521674 0C287.417207 0 76.087666 204.240067 64.595493 460.477135c11.435728-225.779424 198.155312-405.330511 426.768268-405.330511 132.058385 0 250.062001 59.91057 328.452617 154.015434l67.846717-67.835427C800.342903 54.006438 679.708956 0 546.521674 0z"
+                          p-id="3971" fill="#1296db"></path>
+                    <path d="M546.499096 968.864665c152.265644 0 275.699255-123.433611 275.699255-275.699255 0-152.243066-123.433611-275.687966-275.699255-275.687966-76.121533 0-137.838338-61.728095-137.838338-137.849627 0-76.132822 61.716806-137.849627 137.838338-137.849628 228.398465 0 413.526304 185.150417 413.526304 413.560171 0 228.375887-185.127839 413.526304-413.526304 413.526305z"
+                          p-id="3972" fill="#1296db"></path>
+                    <path d="M477.557349 1024c259.093178 0 470.422719-204.262645 481.93747-460.465846-11.469595 225.779424-198.155312 405.3418-426.802135 405.3418-132.035807 0-250.050712-59.933148-328.441328-154.015435l-67.835428 67.801562c87.308903 87.34277 207.908983 141.337919 341.141421 141.337919z"
+                          p-id="3973" fill="#1296db"></path>
+                </svg>
+                <div>
+                    <svg t="1574818355043" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" p-id="6210" width="30" height="30">
+                        <path d="M512.32 0.02003a255.991745 255.991745 0 1 1-259.191742 255.991745A255.991745 255.991745 0 0 1 512.32 0.02003z m376.308625 1023.96898H135.370375a63.997936 63.997936 0 0 1-63.997936-72.318928 447.986554 447.986554 0 0 1 881.893121 0 63.997936 63.997936 0 0 1-64.637935 72.317928z"
+                              p-id="6211" fill="#1296db"></path>
+                    </svg>
+                    <input name="userAccount">
+                </div>
+                <div>
+                    <svg t="1574818558909" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" p-id="7602" width="200" height="200">
+                        <path d="M510.918877 962.503391c-248.508887 0-449.969225-201.463408-449.969225-449.971271 0-248.507864 201.461361-449.969225 449.969225-449.969225 248.507864 0 449.968202 201.461361 449.968202 449.969225C960.887079 761.039983 759.426741 962.503391 510.918877 962.503391zM750.816642 667.064658 557.966403 474.231815c17.430998-24.521486 27.947516-54.315046 27.947516-86.700641 0-82.829474-67.174935-149.988036-149.989059-149.988036-82.845847 0-149.988036 67.158562-149.988036 149.988036 0 82.845847 67.14219 149.991106 149.988036 149.991106 32.372292 0 62.163805-10.487865 86.683245-27.946492l89.671299 89.670276-46.255487 46.286186c-5.097088 5.096065-5.097088 13.358239 0 18.456351l18.427698 18.424628c5.097088 5.097088 13.359262 5.097088 18.455327 0l46.255487-46.272883 38.113039 38.098713-71.273277 71.2743c-5.097088 5.097088-5.097088 13.357216 0 18.455327l18.456351 18.428721c5.095042 5.096065 13.356193 5.096065 18.452257 0l97.906867-97.65718C755.67837 679.866219 755.67837 671.955038 750.816642 667.064658zM435.923836 487.530702c-55.220672 0-99.985202-44.778856-99.985202-99.999528 0-55.220672 44.76453-99.982132 99.985202-99.982132 55.221696 0 99.985202 44.76146 99.985202 99.982132C535.909038 442.751846 491.145531 487.530702 435.923836 487.530702z"
+                              fill="#1296db" p-id="7603"></path>
+                    </svg>
+                    <input name="userPwd" type="password">
+                </div>
+                <div>
+                    <svg t="1574819216467" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" p-id="9789" width="200" height="200">
+                        <path d="M760.793966 388.672154c0-137.48084-111.449353-248.930193-248.931409-248.930193-137.48084 0-248.935058 111.449353-248.935058 248.930193C207.936866 388.672154 163.356638 433.253598 163.356638 488.249097l0 298.717448c0 54.990633 44.580228 99.570861 99.570861 99.570861l497.866467 0c54.990633 0 99.570861-44.580228 99.570861-99.570861L860.364827 488.249097C860.364827 433.253598 815.783383 388.672154 760.793966 388.672154L760.793966 388.672154zM511.862557 189.530433c109.981266 0 199.142938 89.156807 199.142938 199.141722L312.71597 388.672154C312.71597 278.687239 401.877642 189.530433 511.862557 189.530433L511.862557 189.530433zM810.581221 767.049453c0 38.493808-31.205673 69.700697-69.705562 69.700697L282.84459 836.75015c-38.493808 0-69.699481-31.205673-69.699481-69.700697L213.145109 508.161323c0-38.495024 31.205673-69.700697 69.699481-69.700697l458.032285 0c38.498673 0 69.705562 31.205673 69.705562 69.700697L810.582437 767.049453 810.581221 767.049453zM810.581221 767.049453"
+                              p-id="9790" fill="#1296db"></path>
+                        <path d="M328.89777 630.270425 377.039357 582.128839 473.323745 678.413227 425.182159 726.55603 328.89777 630.270425Z"
+                              p-id="9791" fill="#1296db"></path>
+                        <path d="M425.167563 726.531704 665.874278 485.82134 714.017081 533.964143 473.310366 774.67329 425.167563 726.531704Z"
+                              p-id="9792" fill="#1296db"></path>
+                    </svg>
+                    <input name="againUserPwd" type="password">
+                </div>
+                <div>
+                    <label><input class="radio" name="userIdentity" type="radio" value="1">厨师</label>
+                    <label><input class="radio" name="userIdentity" type="radio" value="2">服务员</label>
+                    <label><input class="radio" name="userIdentity" type="radio" value="3">客户</label>
+                </div>
+                <button id="register">注册</button>
+                <button id="back">返回登录</button>
+            </div>
         </div>
+
+
         <script type="text/javascript">
             var baseUrl = "http://localhost:8080/test";
+            var index=1;
             $(function () {
+                setInterval(changeBackground, 10000);
+                $("body").css("height", window.innerHeight-300);
                 $("#register").on("click", register);
                 $("#back").on("click", back);
             });
@@ -68,6 +193,15 @@
 
             function back() {
                 window.location.href = baseUrl;
+            }
+            function changeBackground() {
+                index++;
+                if (index >= 4) {
+                    index=1;
+                }
+
+                var img="url(img/bc"+index+".jpg)";
+                $("body").css("background-image",img);
             }
         </script>
     </body>

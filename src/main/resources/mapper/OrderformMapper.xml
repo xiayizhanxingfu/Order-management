@@ -30,13 +30,33 @@
     </insert>
 
     <select id="selectAll" resultMap="foodOrderformMap">
-        select *
+        select orderform.order_id,orderform.size,orderform.status
+        ,food.*
         from orderform,
-             food,
-             foodclassify
-        where orderform.users_id = #{usersId}
-          and food.food_id = orderform.food_id
-          and food.food_classify = foodclassify.fc_id
+        food,
+        foodclassify
+        where orderform.users_id = #{users.usersId}
+        and food.food_id = orderform.food_id
+        and food.food_classify = foodclassify.fc_id
+        <choose>
+            <when test="key!=''">
+                and food_name like "%"#{key}"%"
+            </when>
+        </choose>
+        <choose>
+            <when test="status>=0">
+                and orderform.status=#{status}
+            </when>
+        </choose>
+        order by food_price
+        <choose>
+            <when test="sort>0">
+                asc
+            </when>
+            <otherwise>
+                desc
+            </otherwise>
+        </choose>
     </select>
     <select id="selectFoodIdAndSize" resultMap="foodOrderformMap">
         select orderform.size,food.food_id,orderform.order_id
@@ -70,7 +90,10 @@
     <update id="updateStatut">
         update orderform
         set status = #{status}
-        where order_id = #{id}
+        where order_id in
+        <foreach collection="id" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </update>
 
 </mapper>

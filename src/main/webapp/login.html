@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>login</title>
+        <script src="js/jquery-3.4.1.js"></script>
+        <script src="js/function.js"></script>
+        <style type="text/css">
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                background-image: url('img/bc7.jpg');
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+            }
+
+            .container {
+                width: 100%;
+
+            }
+
+            #info {
+                height: 260px;
+                margin-top: 300px;
+                margin-left: 60%;
+                padding: 50px;
+                text-align: center;
+                width: 250px;
+                background: rgba(40, 218, 255, 0.4);
+                border-radius: 20px;
+            }
+
+            #info > svg {
+                margin-top: -150px;
+            }
+
+            #info > div > input {
+                width: 200px;
+                height: 30px;
+                line-height: 30px;
+                border-radius: 20px;
+                border: none;
+                text-indent: 35px;
+                margin-top: 10px;
+            }
+
+            #info > div > svg {
+                position: absolute;
+                background-position: 20px 20px;
+                margin-top: 13px;
+                margin-left: 10px;
+                width: 25px;
+                height: 25px;
+            }
+
+            #info > div {
+                margin-top: 10px;
+                color: white;
+            }
+
+            .radio {
+                width: 25px;
+                text-align: center;
+                vertical-align: center;
+            }
+
+            #login {
+                border-radius: 20px;
+                color: white;
+                height: 30px;
+                border: none;
+                background-color: cornflowerblue;
+                margin-top: 10px;
+                width: 200px;
+            }
+
+            #register {
+                border-radius: 20px;
+                color: white;
+                height: 30px;
+                border: none;
+                background-color: cornflowerblue;
+                margin-top: 10px;
+                width: 200px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div id="info">
+                <svg t="1574816204077" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg" p-id="3969" width="100" height="100">
+                    <path d="M477.568638 55.146624c-152.265644 0-275.699255 123.433611-275.699255 275.676677 0 152.276933 123.433611 275.733122 275.699255 275.733122 76.121533 0 137.849627 61.716806 137.849627 137.849627 0 76.087666-61.739384 137.804471-137.849627 137.804472-228.375887 0-413.537593-185.139128-413.537593-413.526305C64.019756 240.297041 249.181461 55.146624 477.568638 55.146624z"
+                          p-id="3970" fill="#1296db"></path>
+                    <path d="M546.521674 0C287.417207 0 76.087666 204.240067 64.595493 460.477135c11.435728-225.779424 198.155312-405.330511 426.768268-405.330511 132.058385 0 250.062001 59.91057 328.452617 154.015434l67.846717-67.835427C800.342903 54.006438 679.708956 0 546.521674 0z"
+                          p-id="3971" fill="#1296db"></path>
+                    <path d="M546.499096 968.864665c152.265644 0 275.699255-123.433611 275.699255-275.699255 0-152.243066-123.433611-275.687966-275.699255-275.687966-76.121533 0-137.838338-61.728095-137.838338-137.849627 0-76.132822 61.716806-137.849627 137.838338-137.849628 228.398465 0 413.526304 185.150417 413.526304 413.560171 0 228.375887-185.127839 413.526304-413.526304 413.526305z"
+                          p-id="3972" fill="#1296db"></path>
+                    <path d="M477.557349 1024c259.093178 0 470.422719-204.262645 481.93747-460.465846-11.469595 225.779424-198.155312 405.3418-426.802135 405.3418-132.035807 0-250.050712-59.933148-328.441328-154.015435l-67.835428 67.801562c87.308903 87.34277 207.908983 141.337919 341.141421 141.337919z"
+                          p-id="3973" fill="#1296db"></path>
+                </svg>
+                <div>
+                    <svg t="1574818355043" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" p-id="6210" width="30" height="30">
+                        <path d="M512.32 0.02003a255.991745 255.991745 0 1 1-259.191742 255.991745A255.991745 255.991745 0 0 1 512.32 0.02003z m376.308625 1023.96898H135.370375a63.997936 63.997936 0 0 1-63.997936-72.318928 447.986554 447.986554 0 0 1 881.893121 0 63.997936 63.997936 0 0 1-64.637935 72.317928z"
+                              p-id="6211" fill="#1296db"></path>
+                    </svg>
+                    <input name="userAccount">
+                </div>
+                <div>
+                    <svg t="1574818558909" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" p-id="7602" width="200" height="200">
+                        <path d="M510.918877 962.503391c-248.508887 0-449.969225-201.463408-449.969225-449.971271 0-248.507864 201.461361-449.969225 449.969225-449.969225 248.507864 0 449.968202 201.461361 449.968202 449.969225C960.887079 761.039983 759.426741 962.503391 510.918877 962.503391zM750.816642 667.064658 557.966403 474.231815c17.430998-24.521486 27.947516-54.315046 27.947516-86.700641 0-82.829474-67.174935-149.988036-149.989059-149.988036-82.845847 0-149.988036 67.158562-149.988036 149.988036 0 82.845847 67.14219 149.991106 149.988036 149.991106 32.372292 0 62.163805-10.487865 86.683245-27.946492l89.671299 89.670276-46.255487 46.286186c-5.097088 5.096065-5.097088 13.358239 0 18.456351l18.427698 18.424628c5.097088 5.097088 13.359262 5.097088 18.455327 0l46.255487-46.272883 38.113039 38.098713-71.273277 71.2743c-5.097088 5.097088-5.097088 13.357216 0 18.455327l18.456351 18.428721c5.095042 5.096065 13.356193 5.096065 18.452257 0l97.906867-97.65718C755.67837 679.866219 755.67837 671.955038 750.816642 667.064658zM435.923836 487.530702c-55.220672 0-99.985202-44.778856-99.985202-99.999528 0-55.220672 44.76453-99.982132 99.985202-99.982132 55.221696 0 99.985202 44.76146 99.985202 99.982132C535.909038 442.751846 491.145531 487.530702 435.923836 487.530702z"
+                              fill="#1296db" p-id="7603"></path>
+                    </svg>
+                    <input name="userPwd" type="password">
+                </div>
+                <div>
+                    <label><input class="radio" name="userIdentity" type="radio" value="1">厨师</label>
+                    <label><input class="radio" name="userIdentity" type="radio" value="2">服务员</label>
+                    <label><input class="radio" name="userIdentity" type="radio" value="3">客户</label>
+                </div>
+                <button id="login">登录</button>
+                <button id="register">注册</button>
+            </div>
+        </div>
+        <script type="text/javascript">
+
+            var index = 1;
+            $(function () {
+                $("body").css("height", window.innerHeight - 300);
+                $("#login").on("click", login);
+                $("#register").on("click", register);
+            });
+
+            function login() {
+                $.ajax({
+                    url: baseUrl + "/login",
+                    type: "POST",
+                    data: {
+                        userAccount: $("[name='userAccount']").val(),
+                        userPwd: $("[name='userPwd']").val(),
+                        userIdentity: $("[name='userIdentity']:checked").val()
+                    },
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.status === "error") {
+                            alert("账号或者密码错误");
+                        } else {
+                            console.log(json);
+                            setCookie("users", json.userinfo.userName, 1800000);
+                            var url;
+                            switch ($("[name='userIdentity']:checked").val()) {
+                                case "1":
+                                    //厨师
+                                    url = baseUrl + "chef/index.html";
+                                    break;
+                                case "2":
+                                    url = baseUrl + "waiter/index.html";
+                                    //服务员
+                                    break;
+                                case "3":
+                                    //顾客
+                                    url = baseUrl + "index.html";
+                                    break;
+                            }
+                            window.location.href = url;
+                        }
+                    }
+                });
+            }
+
+            function register() {
+                window.location.href = baseUrl + "/register.html";
+            }
+
+        </script>
+    </body>
+</html>

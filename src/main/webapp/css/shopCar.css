@@ -1,0 +1,205 @@
+/*导航栏*/
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style-type: none;
+}
+
+#head {
+    height: 50px;
+}
+
+#navigation {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 50px;
+    background-color: #dbdbdb;
+}
+
+#navigation:hover {
+    background-color: cornflowerblue;
+}
+
+#navigation ul {
+    width: 750px;
+    margin: 0 auto;
+}
+
+#navigation ul li {
+    line-height: 50px;
+    width: 150px;
+    float: left;
+    text-align: center;
+}
+
+/*用户名和头像*/
+#user{
+    position: absolute;
+    right: 100px;
+    height: 50px;
+    width: 200px;
+}
+#user div {
+    line-height: 50px;
+}
+
+#user img {
+    float: left;
+    margin-right: 15px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+#user div > p {
+    line-height: 50px;
+}
+
+#user div div p {
+    width: 80px;
+    line-height: 35px;
+    text-align: center;
+}
+
+#user div div p:hover {
+    background-color: #c6c3be;
+}
+
+#user div {
+    /*position: absolute;*/
+    display: inline-block;
+}
+
+#user div div {
+    cursor: pointer;
+    display: none;
+}
+
+#user div:hover div {
+    display: inline-block;
+    background-color: cornflowerblue;
+    line-height: 50px;
+}
+
+/*   底部*/
+#foot {
+    background-color: #272727;
+    color: ghostwhite;
+    text-align: center;
+}
+
+#foot p {
+    line-height: 50px;
+}
+
+/*容器*/
+#contextBody {
+    width: 100%;
+    height: 800px;
+    background-color: #ffffff;
+}
+
+/*筛选容器*/
+#search {
+    margin-top: 20px;
+    margin-right: 20px;
+    text-align: right;
+}
+
+/*搜索框*/
+#search input[type=text] {
+    width: 150px;
+    line-height: 30px;
+    border-radius: 5px;
+    border: none;
+    color: #272727;
+    background-color: #78c0ff;
+}
+
+#search > label:first-child {
+    width: 150px;
+    text-indent: 10px;
+    margin-right: 10px;
+}
+
+/*筛选排序*/
+#search > label {
+    background-color: #78c0ff;
+    border-radius: 5px;
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: white;
+}
+/*筛选状态*/
+#search >label select {
+    border: none;
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+    background-color: #78c0ff;
+}
+#search >label select option{
+    width: 100px;
+    line-height: 30px;
+}
+/*购物车商品*/
+#shopCarList {
+    height: 700px;
+    padding: 10px 50px;
+}
+
+#shopCarList > table {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+#shopCarList > table tr > td,#shopCarList > table tr > th {
+    /*border: 1px solid #78c0ff;*/
+    width: 200px;
+    text-align: center;
+}
+
+#shopCarList > table tr > td img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+#shopCarList > table  tr > td:nth-child(3) > input{
+    border: none;
+    text-align: center;
+    width: 100%;
+    line-height: 70px;
+    font-size: 20px;
+}
+#shopCarList span{
+    color: red;
+}
+#shopCarList del {
+    text-decoration: line-through;
+    color: gainsboro;
+}
+/*分页*/
+
+.page {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.page a, .page span {
+    border: 1px solid #78c0ff;
+    background-color: #78c0ff;
+    padding: 3px 10px;
+    color: white;
+
+    cursor: pointer;
+}
+
+.page a:hover, .page span:hover {
+    color: black;
+}

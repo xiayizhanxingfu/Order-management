@@ -2,6 +2,7 @@ package com.dao;
 
 
 import com.bean.Orderform;
+import com.bean.Task;
 import com.bean.Users;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,9 +23,12 @@ public interface OrderformDao {
      * 获取所有订单信息
      *
      * @param users 用户信息
+     * @param key 关键字
+     * @param sort 排序>0升序;<0降序
+     * @param status 订单状态 -1:全部;0:未付款;1:己付款;2:未上菜
      * @return 订单信息
      */
-    List<Orderform> selectAll(Users users);
+    List<Orderform> selectAll(@Param("users") Users users, @Param("key") String key, @Param("sort") int sort, @Param("status") int status);
 
     /**
      * 付款
@@ -36,10 +40,10 @@ public interface OrderformDao {
 
     /**
      * 修改订单状态
-     * @param id 订单id
+     * @param id 订单列表
      * @param status 订单状态
      */
-    void updateStatut(@Param("id") int id, @Param("status") int status);
+    void updateStatut(@Param("id") int[] id, @Param("status") int status);
 
     /**
      * 获取食物编号和数量

@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.bean.Food;
 import com.bean.Orderform;
 import com.bean.Users;
+import com.github.pagehelper.PageInfo;
 import com.service.FoodService;
+import com.service.FoodclassifyService;
 import com.service.OrderformService;
 import com.service.TaskService;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,25 +34,32 @@ public class ClientController {
     OrderformService orderformService;
     @Resource
     TaskService taskService;
+    @Resource
+    FoodclassifyService foodclassifyService;
 
     /**
-     * 获取食物列表
+     * 获取第页食物列表
      *
      * @param session 会话
      * @return 列表
      */
     @ResponseBody
-    @RequestMapping(value = "/foodList", produces = {"application/json;charset=utf-8"})
-    public String foodList(HttpSession session) {
+    @RequestMapping(value = "/foodPage", produces = {"application/json;charset=utf-8"})
+    public String foodList(HttpSession session,
+                           @RequestParam("key") String key,
+                           @RequestParam("sort") int sort,
+                           @RequestParam("page") int pageNum,
+                           @RequestParam("classify") int classify) {
+        int pageSize = 12;
         Users users = (Users) session.getAttribute("userinfo");
         Map<String, Object> map = new HashMap<>(3);
         List<Food> list;
         if (users == null) {
             map.put("status", "error");
         } else {
-            list = foodService.getFoodList();
             map.put("status", "ok");
-            map.put("foodList", list);
+            map.put("pageinfo", foodService.getFoodPage(pageNum, pageSize, key, sort, classify));
+
         }
         return JSON.toJSONString(map);
     }
@@ -92,16 +102,20 @@ public class ClientController {
      * @return 订单列表
      */
     @ResponseBody
-    @RequestMapping(value = "/orderformList", produces = {"application/json;charset=utf-8"})
-    public String orderformList(HttpSession session) {
+    @RequestMapping(value = "/orderformPage", produces = {"application/json;charset=utf-8"})
+    public String orderformList(HttpSession session,
+                                @RequestParam("key") String key,
+                                @RequestParam("sort") int sort,
+                                @RequestParam("page") int pageNum,
+                                @RequestParam(name = "status", defaultValue = "0") int status) {
         Map<String, Object> map = new HashMap<>(3);
         Users users = (Users) session.getAttribute("userinfo");
         if (users == null) {
             map.put("status", "error");
         } else {
-            List<Orderform> list = orderformService.getOrderformList(users);
+            PageInfo<Orderform> pageInfo = orderformService.getOrderformList(pageNum, key, sort, status, users);
             map.put("status", "ok");
-            map.put("orderformList", list);
+            map.put("pageinfo", pageInfo);
         }
         return JSON.toJSONString(map);
     }
@@ -118,7 +132,7 @@ public class ClientController {
     public String settleAccounts(HttpSession session,
                                  @RequestParam("id[]") int[] id,
                                  @RequestParam("size[]") int[] sizes,
-                                 @RequestParam("localtion")String localtion) {
+                                 @RequestParam("localtion") String localtion) {
         Map<String, Object> map = new HashMap<>(2);
         Users users = (Users) session.getAttribute("userinfo");
         System.out.println(users);
@@ -138,6 +152,28 @@ public class ClientController {
             //付款成功后,添加订单到任务
             taskService.addTask(list, users);
             map.put("status", "ok");
+        }
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     * 按照食物分类获取食物列表
+     *
+     * @param session 会话
+     * @return 结果
+     */
+    @ResponseBody
+    @RequestMapping(value = "/foodclassifys", produces = {"application/json;charset=utf-8"})
+    public String foodclassifys(HttpSession session) {
+        Users users = (Users) session.getAttribute("userinfo");
+        Map<String, Object> map = new HashMap<>(3);
+        List<Food> list;
+        if (users == null) {
+            map.put("status", "error");
+        } else {
+            list = foodclassifyService.getFoodListByFoodclassify();
+            map.put("status", "ok");
+            map.put("foodListByFoodclassify", list);
         }
         return JSON.toJSONString(map);
     }

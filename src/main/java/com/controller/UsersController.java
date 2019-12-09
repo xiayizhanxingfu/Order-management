@@ -19,12 +19,11 @@ public class UsersController {
 
     /**
      * 登录
-     *
      * @param users 登录信息
      * @return 结果
      */
     @ResponseBody
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/login", produces = {"application/json;charset=utf-8"})
     public String login(Users users, HttpSession session) {
         Map<String, Object> map = new HashMap<>();
         System.out.println(users);
@@ -35,12 +34,14 @@ public class UsersController {
         } else {
             map.put("status", "ok");
             session.setAttribute("userinfo", users);
+            map.put("userinfo", users);
         }
         return JSON.toJSONString(map);
     }
 
     /**
      * 注册账号
+     *
      * @param users 注册基本信息
      * @return 注册后的账号
      */

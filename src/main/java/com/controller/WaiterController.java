@@ -28,26 +28,33 @@ public class WaiterController {
     @Resource
     OrderformService orderformService;
 
+    /**
+     * 获取所有任务列表
+     *
+     * @param session 会话
+     * @return 结果
+     */
 
     @ResponseBody
     @RequestMapping(value = "/taskList", produces = {"application/json;charset=utf-8"})
-    public String taskList(HttpSession session) {
+    public String taskList(HttpSession session,
+                           @RequestParam("page") int page) {
         Map<String, Object> map = new HashMap<>(3);
         Users users = (Users) session.getAttribute("userinfo");
         if (users == null) {
             map.put("status", "error");
         } else {
-            List<Orderform> taskList = taskService.getWaiterTask();
             map.put("status", "ok");
-            map.put("taskList", taskList);
+            map.put("pageinfo", taskService.getWaiterTask(page));
         }
         return JSON.toJSONString(map);
     }
 
+    //上菜
     @ResponseBody
     @RequestMapping(value = "/done", produces = {"application/json;charset=utf-8"})
     public String doneTask(HttpSession session,
-                           @RequestParam("id") int id) {
+                           @RequestParam("id[]") int[] id) {
         Map<String, Object> map = new HashMap<>(3);
         Users users = (Users) session.getAttribute("userinfo");
         if (users == null) {

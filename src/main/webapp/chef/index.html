@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>index</title>
+        <script src="/test/js/jquery-3.4.1.js"></script>
+        <script src="/test/js/function.js"></script>
+        <style type="text/css">
+            /*导航栏*/
+            * {
+                margin: 0;
+                padding: 0;
+                text-decoration: none;
+                list-style-type: none;
+            }
+
+            #head {
+                height: 685px;
+            }
+
+            #navigation {
+                position: relative;
+                z-index: 2;
+                width: 100%;
+                height: 50px;
+                /*background-color: red;*/
+            }
+
+            #navigation:hover {
+                background-color: cornflowerblue;
+            }
+
+            #navigation ul {
+                width: 750px;
+                margin: 0 auto;
+            }
+
+            #navigation ul li {
+                line-height: 50px;
+                width: 150px;
+                float: left;
+                text-align: center;
+            }
+
+            /*用户名和头像*/
+            #user{
+                position: absolute;
+                right: 100px;
+                height: 50px;
+                width: 200px;
+                /*text-align: center;*/
+            }
+            #user div {
+                line-height: 50px;
+            }
+
+            #user img {
+                float: left;
+                margin-right: 15px;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+            }
+
+            #user div > p {
+                line-height: 50px;
+            }
+
+            #user div div p {
+                width: 80px;
+                line-height: 35px;
+                text-align: center;
+            }
+
+            #user div div p:hover {
+                background-color: #c6c3be;
+            }
+
+            #user div {
+                /*position: absolute;*/
+                display: inline-block;
+            }
+
+            #user div div {
+                cursor: pointer;
+                display: none;
+            }
+
+            #user div:hover div {
+                display: inline-block;
+                background-color: cornflowerblue;
+                line-height: 50px;
+            }
+
+            /*首页背景图*/
+            #navigation + div img {
+                z-index: 1;
+                position: absolute;
+                top: 0;
+                width: 100%;
+                height: 685px;
+            }
+
+            /*第二部分文本和图片*/
+            #contextText1 {
+                height: 745px;
+            }
+
+            #contextText1 p {
+                line-height: 60px;
+                text-align: center;
+                background-color: #d2d6d9;
+            }
+
+            #contextText1 div img {
+                width: 100%;
+                height: 685px;
+            }
+
+            /*第三部分文本和图片*/
+            #contextText2 div:first-child p {
+                line-height: 60px;
+                background-color: #d2d6d9;
+                text-align: center;
+            }
+
+            #contextText2 div:last-child img {
+                width: 50%;
+                height: 50%;
+                float: left;
+            }
+
+            /*   底部*/
+            #foot {
+                background-color: #272727;
+                color: ghostwhite;
+                text-align: center;
+            }
+
+            #foot p {
+                line-height: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="head">
+            <div id="navigation">
+                <ul>
+                    <a href="/test/chef/index.html">
+                        <li>首页</li>
+                    </a>
+                    <a href="/test/chef/taskList.html">
+                        <li>任务</li>
+                    </a>
+                    <a href="/test/chef/myTaskList.html">
+                        <li>我的任务</li>
+                    </a>
+                    <a>
+                        <li>关于我们</li>
+                    </a>
+                </ul>
+                <div id="user">
+                    <img src="/test/img/head.jpg">
+                    <div>
+                        <p></p>
+                        <div>
+                            <p id="login">登录</p>
+                            <p id="exit">注销</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div>
+                <img src="/test/img/bc1.jpg">
+            </div>
+        </div>
+        <div id="contextText1">
+            <p>每年都会有慕名而来的游客,在这里就餐</p>
+            <div>
+                <img src="/test/img/bc2.jpg">
+            </div>
+        </div>
+        <div id="contextText2">
+            <div>
+                <p>简约,精美,大方,是当代人的最爱的生活风格</p>
+            </div>
+            <div>
+                <div><img src="/test/img/bc3.jpg"></div>
+                <div><img src="/test/img/bc4.jpg"></div>
+                <div><img src="/test/img/bc5.jpg"></div>
+                <div><img src="/test/img/bc6.jpg"></div>
+            </div>
+        </div>
+        <div id="foot">
+            <p>联系我们</p>
+            <p>了解更多的产品请拨打:400 888 8888 | 咨询服务请拨打:400 999 9999</p>
+        </div>
+        <script type="application/javascript">
+            $(function () {
+                init();
+            });
+        </script>
+    </body>
+</html>

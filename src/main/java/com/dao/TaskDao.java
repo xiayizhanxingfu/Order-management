@@ -13,49 +13,30 @@ import java.util.List;
 public interface TaskDao {
     /**
      * 添加任务
+     *
      * @param tasks 任务列表
      * @param users 用户信息
      */
-    void insertAll(@Param("list") List<Orderform> tasks,@Param("users") Users users);
+    void insertAll(@Param("list") List<Orderform> tasks, @Param("users") Users users);
+
 
     /**
-     * 获取任务列表
-     * @return 任务列表
+     * 查询任务列表
+     *
+     * @param taskStatus      任务状态 0:未领取;1:己领取,正在做;2:完成
+     * @param orderformStatus 订单状态 0:未付款;1:己付款;2:未上菜;3:完成交易
+     * @param functionary     厨师负责人 默认无
+     * @return
      */
-    List<Task> selectAll();
+    List<Task> selectTask(@Param("taskStatus") int taskStatus, @Param("orderformStatus") int orderformStatus, @Param("functionary") String functionary);
 
     /**
-     * 领取任务
-     * @param users 厨师信息
-     * @param id 任务编号
+     * 更新任务属性
+     *
+     * @param status      状态 0:为领取;1:己领取,正在做;2:完成
+     * @param functionary 负责人,默认为无
+     * @param id          用户的订单列表
+     * @return
      */
-    void updateGetTask(@Param("users") Users users, @Param("id") int id);
-
-    /**
-     * 取消任务
-     * @param users 厨师信息
-     * @param id 任务编号
-     */
-    void updateCancelTask(@Param("users") Users users, @Param("id") int id);
-
-    /**
-     * 完成任务
-     * @param users 厨师账号
-     * @param id 任务编号
-     */
-    void updateDoneTask(@Param("users") Users users, @Param("id") int id);
-
-    /**
-     * 获取订单id
-     * @param id 任务id
-     * @return 结果
-     */
-    int getOrderId(int id);
-
-    /**
-     * 获取 status 的信息
-     * @param status 状态
-     * @return 结果
-     */
-    List<Orderform> selectAllByStatus(int status);
+    int updateTask(@Param("status") int status, @Param("functionary") String functionary, @Param("orderId") int[] id);
 }

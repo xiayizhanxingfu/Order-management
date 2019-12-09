@@ -10,4 +10,9 @@
         <typeAlias type="com.bean.Orderform" alias="orderform"/>
         <typeAlias type="com.bean.Task" alias="task"/>
     </typeAliases>
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
 </configuration>

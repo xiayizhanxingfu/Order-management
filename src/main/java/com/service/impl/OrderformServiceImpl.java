@@ -1,13 +1,17 @@
 package com.service.impl;
 
 import com.bean.Orderform;
+import com.bean.Task;
 import com.bean.Users;
 import com.dao.OrderformDao;
 import com.dao.TaskDao;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.service.OrderformService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,8 +30,11 @@ public class OrderformServiceImpl implements OrderformService {
     }
 
     @Override
-    public List<Orderform> getOrderformList(Users users) {
-        return orderformDao.selectAll(users);
+    public PageInfo<Orderform> getOrderformList(int pageNum, String key, int sort, int status, Users users) {
+        PageHelper.startPage(pageNum, 9);
+        List<Orderform> list = orderformDao.selectAll(users,key,sort,status);
+        PageInfo<Orderform> pageInfo = new PageInfo<>(list);
+        return pageInfo;
     }
 
     @Override
@@ -36,14 +43,12 @@ public class OrderformServiceImpl implements OrderformService {
     }
 
     @Override
-    public void doneTask(int id) {
+    public void doneTask(int[] id) {
         orderformDao.updateStatut(id, 3);
     }
 
     @Override
-    public void updateStatut(int id,int status) {
-        //根据任务编号获取订单编号
-        id = taskDao.getOrderId(id);
-        orderformDao.updateStatut(id,status);
+    public void updateStatut(int[] id, int status) {
+        orderformDao.updateStatut(id, status);
     }
 }

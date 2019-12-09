@@ -28,28 +28,49 @@ public class ChefController {
     OrderformService orderformService;
 
     /**
-     * 获取所有任务列表
+     * 获取所有未领取任务列表
      *
      * @param session 会话
      * @return 状态和结果
      */
     @ResponseBody
     @RequestMapping(value = "/taskList", produces = {"application/json;charset=utf-8"})
-    public String taskList(HttpSession session) {
+    public String taskList(HttpSession session,
+                           @RequestParam("page") int page) {
         Map<String, Object> map = new HashMap<>(3);
         Users users = (Users) session.getAttribute("userinfo");
         if (users == null) {
             map.put("status", "error");
         } else {
-            List<Task> taskList = taskService.getTask();
             map.put("status", "ok");
-            map.put("taskList", taskList);
+            map.put("pageinfo", taskService.getTask(page));
         }
         return JSON.toJSONString(map);
     }
 
     /**
-     * 领取任务
+     * 获取自己的己领取任务列表
+     *
+     * @param session 会话
+     * @return 状态和结果
+     */
+    @ResponseBody
+    @RequestMapping(value = "/myTaskList", produces = {"application/json;charset=utf-8"})
+    public String myTaskList(HttpSession session,
+                             @RequestParam("page") int page) {
+        Map<String, Object> map = new HashMap<>(3);
+        Users users = (Users) session.getAttribute("userinfo");
+        if (users == null) {
+            map.put("status", "error");
+        } else {
+            map.put("status", "ok");
+            map.put("pageinfo", taskService.getMyTask(users, page));
+        }
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     * 厨师领取操作
      *
      * @param session 会话
      * @return 状态
@@ -57,22 +78,22 @@ public class ChefController {
     @ResponseBody
     @RequestMapping(value = "/getTask", produces = {"application/json;charset=utf-8"})
     public String getTask(HttpSession session,
-                          @RequestParam("id") int id) {
+                          @RequestParam("id[]") int[] id) {
         Map<String, Object> map = new HashMap<>(2);
         Users users = (Users) session.getAttribute("userinfo");
         if (users == null) {
             map.put("status", "error");
         } else {
-            taskService.getTask(users, id);
             //修改客户订单状态为未上菜
             orderformService.updateStatut(id, 2);
+            taskService.getTask(users, id);
             map.put("status", "ok");
         }
         return JSON.toJSONString(map);
     }
 
     /**
-     * 取消任务
+     * 厨师取消任务操作
      *
      * @param session 会话
      * @param id      任务编号
@@ -81,7 +102,7 @@ public class ChefController {
     @ResponseBody
     @RequestMapping(value = "/cancelTask", produces = {"application/json;charset=utf-8"})
     public String calcelTask(HttpSession session,
-                             @RequestParam("id") int id) {
+                             @RequestParam("id[]") int[] id) {
         Map<String, Object> map = new HashMap<>(2);
         Users users = (Users) session.getAttribute("userinfo");
         if (users == null) {
@@ -89,14 +110,14 @@ public class ChefController {
         } else {
             taskService.cancelTask(users, id);
             //修个客户订单状态为己付款
-            orderformService.updateStatut(id,1);
+            orderformService.updateStatut(id, 1);
             map.put("status", "ok");
         }
         return JSON.toJSONString(map);
     }
 
     /**
-     * 完成任务
+     * 厨师完成任务操作
      *
      * @param session 会话
      * @param id      任务编号
@@ -105,7 +126,7 @@ public class ChefController {
     @ResponseBody
     @RequestMapping(value = "/doneTask", produces = {"application/json;charset=utf-8"})
     public String doneTask(HttpSession session,
-                           @RequestParam("id") int id) {
+                           @RequestParam("id[]") int[] id) {
         Map<String, Object> map = new HashMap<>(2);
         Users users = (Users) session.getAttribute("userinfo");
         if (users == null) {

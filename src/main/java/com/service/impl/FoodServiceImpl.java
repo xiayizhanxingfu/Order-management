@@ -2,6 +2,8 @@ package com.service.impl;
 
 import com.bean.Food;
 import com.dao.FoodDao;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.service.FoodService;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,10 @@ public class FoodServiceImpl implements FoodService {
     FoodDao foodDao;
 
     @Override
-    public List<Food> getFoodList() {
-        return foodDao.selectAll();
+    public PageInfo<Food> getFoodPage(int pageNum, int pageSize, String key, int sort,int classify) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Food> list = foodDao.selectAll(key, sort,classify);
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
     }
 }

@@ -2,162 +2,160 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <title>buy</title>
         <script src="/test/js/jquery-3.4.1.js"></script>
-        <title>任务</title>
+        <script src="/test/js/function.js"></script>
+        <link href="/test/css/taskChefList.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div style="text-align: center;">
-            <table id="info">
-                <tr>
-                    <th>编号</th>
-                    <th>食物名称</th>
-                    <th>食物分类</th>
-                    <th>数量</th>
-                    <th>任务状态</th>
-                    <th>负责人</th>
-                    <th>操作</th>
-                </tr>
-            </table>
+        <div id="head">
+            <div id="navigation">
+                <ul>
+                    <a href="/test/chef/index.html">
+                        <li>首页</li>
+                    </a>
+                    <a href="/test/chef/taskList.html">
+                        <li>任务</li>
+                    </a>
+                    <a href="/test/chef/myTaskList.html">
+                        <li>我的任务</li>
+                    </a>
+                    <a>
+                        <li>关于我们</li>
+                    </a>
+                </ul>
+                <div id="user">
+                    <img src="/test/img/head.jpg">
+                    <div>
+                        <p></p>
+                        <div>
+                            <p id="login">登录</p>
+                            <p id="exit">注销</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <script type="text/javascript">
-            var baseUrl = "http://localhost:8080/test";
+        <div id="contextBody">
+            <div id="top">
+                <div id="search">
+                    <label>领取任务</label>
+                </div>
+                <div id="shopCarList">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>详细</th>
+                                <th>数量</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="page">
+                    <!--                    <span>上一页</span>-->
+                    <!--                    <a href="#">1</a>-->
+                    <!--                    <a href="#">2</a>-->
+                    <!--                    <a href="#">3</a>-->
+                    <!--                    <a href="#">4</a>-->
+                    <!--                    <a href="#">5</a>-->
+                    <!--                    <a href="#">6</a>-->
+                    <!--                    <a href="#">7</a>-->
+                    <!--                    <a href="#">8</a>-->
+                    <!--                    <span>下一页</span>-->
+                </div>
+            </div>
+
+        </div>
+        <div id="foot">
+            <p>联系我们</p>
+            <p>了解更多的产品请拨打:400 888 8888 | 咨询服务请拨打:400 999 9999</p>
+        </div>
+        <script type="application/javascript">
             $(function () {
                 init();
+                taskChefList(1);
+                $("#search > label:nth-child(1)").on("click", getTask);
             });
 
-            //初始化
-            function init() {
+            function taskChefList(page) {
+                if (typeof page === "object") {
+                    page = 1;
+                }
                 $.ajax({
-                        url: baseUrl + "/chef/taskList",
-                        type: "GET",
-                        dataType: "json",
-                        success: function (json) {
-                            console.log(json);
-                            if (json.status === "error") {
-                                alert("请登录");
-                                window.location.href = baseUrl;
-                            } else {
-                                if (json.taskList.length === 0) {
-                                    $("#info").remove();
-                                    $("div").text("暂无任务");
-                                } else {
-
-
-                                    for (var i = 0; i < json.taskList.length; i++) {
-                                        var td = "<td>" + json.taskList[i].taskId + "</td>";
-                                        td += "<td>" + json.taskList[i].orderform.food.foodName + "</td>";
-                                        td += "<td>" + json.taskList[i].orderform.food.foodClassify.fcName + "</td>";
-                                        td += "<td>" + json.taskList[i].size + "</td>";
-                                        var status = json.taskList[i].status;
-                                        switch (status) {
-                                            case 0:
-                                                status = "未领取";
-                                                break;
-                                            case 1:
-                                                status = "己领取";
-                                                break;
-                                            case 2:
-                                                status = "完成";
-                                                break;
-                                        }
-                                        td += "<td>" + status + "</td>";
-                                        td += "<td>" + json.taskList[i].functionary + "</td>";
-                                        status = json.taskList[i].status;
-                                        switch (status) {
-                                            case 0:
-                                                status = "<button>领取任务</button>";
-                                                break;
-                                            case 1:
-                                                status = "<button>取消任务</button><button>完成任务</button>";
-                                                break;
-                                            case 2:
-                                                status = "<button>删除任务</button>";
-                                                break;
-                                        }
-                                        td += "<td>" + status + "</td>";
-                                        $("#info").append($("<tr>" + td + "</tr>"));
-                                    }
-                                    $("table button").on("click", opertion);
-                                }
+                    url: baseUrl + "chef/taskList",
+                    type: "POST",
+                    data: {
+                        "page": page
+                    },
+                    dataType: "JSON",
+                    success: function (json) {
+                        console.log(json);
+                        if (json.status === "error") {
+                            setCookie("users", '', -1);
+                            $("#user > div:nth-child(2) > p:nth-child(1)").text('请登录');
+                        } else {
+                            //商品列表
+                            //清空原来信息
+                            $("#shopCarList  table > tbody *").remove();
+                            var view = "";
+                            for (var i = 0; i < json.pageinfo.list.length; i++) {
+                                view += "<td>" + json.pageinfo.list[i].taskId + "</td>";
+                                view += '<td>' +
+                                    '<label>' +
+                                    '<img src="' + json.pageinfo.list[i].orderform.food.foodUrl + '"/>' +
+                                    '       </label>' +
+                                    '<span>' + json.pageinfo.list[i].orderform.food.foodName + '</span> ' +
+                                    '</td>';
+                                view += "<td>" + json.pageinfo.list[i].orderform.size + "</td>";
+                                view += "<td><label><input type='checkbox' value='"+json.pageinfo.list[i].orderform.orderId+"'>选择</label></td>";
+                                view = "<tr>" + view + "</tr>";
                             }
+                            $("#shopCarList  table > tbody").append(view);
+                            //分页列表
+                            //清空原来信息
+                            $(".page *").remove();
+                            $(".page").append(pageinfoView(json));
+                            //分页绑定点击事件
+                            $(".page *").on("click", function () {
+                                taskChefList($(this).attr("page"));
+                            });
                         }
                     }
-                );
-            }
-
-            //点击事件
-            function opertion() {
-                switch ($(this).text()) {
-                    case "领取任务":
-                        getTask($(this));
-                        break;
-                    case "取消任务":
-                        cancelTask($(this));
-                        break;
-                    case "完成任务":
-                        doneTask($(this));
-                        break;
-                }
+                });
             }
 
             //领取任务
-            function getTask(element) {
-                $.ajax({
-                    url: baseUrl + "/chef/getTask",
-                    type: "get",
-                    data: {
-                        id: element.parents("tr").find("td:first").text()
-                    },
-                    dataType: "json",
-                    success: function (json) {
-                        console.log(json);
-                        if (json.status === "ok") {
-                            alert("任务领取成功");
-                            window.location.href = baseUrl + "/chef/taskList.html";
-                        } else {
-                            alert("未知错误");
-                        }
-                    }
-                });
-            }
+            function getTask() {
+                var checkboxs = $("#shopCarList input[type=checkbox]:checked");
+                if (checkboxs.length === 0) {
+                    alert("请选择商品");
+                    return false;
+                }
 
-            //取消任务
-            function cancelTask(element) {
+                var ids = [];
+                for (var i = 0; i < checkboxs.length; i++) {
+                    ids[i] = $(checkboxs[i]).val();
+                }
+                console.log(ids);
                 $.ajax({
-                    url: baseUrl + "/chef/cancelTask",
+                    url: baseUrl + "chef/getTask",
                     type: "get",
                     data: {
-                        id: element.parents("tr").find("td:first").text()
+                        id: ids,
                     },
                     dataType: "json",
                     success: function (json) {
                         console.log(json);
                         if (json.status === "ok") {
-                            alert("任务取消成功");
-                            window.location.href = baseUrl + "/chef/taskList.html";
-                        } else {
-                            alert("未知错误");
-                        }
-                    }
-                });
-            }
-
-            //完成任务
-            function doneTask(element) {
-                $.ajax({
-                    url: baseUrl + "/chef/doneTask",
-                    type: "get",
-                    data: {
-                        id: element.parents("tr").find("td:first").text()
-                    },
-                    dataType: "json",
-                    success: function (json) {
-                        console.log(json);
-                        if (json.status === "ok") {
-                            alert("任务完成");
-                            window.location.href = baseUrl + "/chef/taskList.html";
-                        } else {
-                            alert("未知错误");
+                            taskChefList(1);
+                            alert("领取任务成功成功");
                         }
                     }
                 });

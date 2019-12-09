@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="GROUP_BY_SEVERITY" value="true" />
+  </component>
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="test:war exploded" />
@@ -40,25 +43,23 @@
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="diningroom: schema" type="76f4a085:MysqlImplModel$Schema" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="diningroom@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="diningroom: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="task: table" type="285a2a93:MysqlImplModel$Table" />
-      </path>
     </expand>
     <select />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="printScope" value="4" />
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../test\exportToHTML" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="mybatisConfig" />
         <option value="log4j" />
-        <option value="HTML File" />
-        <option value="Class" />
         <option value="Interface" />
         <option value="mybatisMapper" />
+        <option value="Class" />
+        <option value="CSS File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -89,16 +90,29 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/bean" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+    <property name="project.structure.side.proportion" value="0.20088889" />
+    <property name="settings.editor.selected.configurable" value="fileTemplates" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\zhangkaiqi\Desktop\test\src\main\webapp\img" />
+      <recent name="C:\Users\zhangkaiqi\Desktop\test\src\main\webapp\waiter" />
+      <recent name="C:\Users\zhangkaiqi\Desktop\test\src\main\webapp\chef" />
+      <recent name="C:\Users\zhangkaiqi\Desktop\test\src\main\webapp\client" />
+      <recent name="C:\Users\zhangkaiqi\Desktop\test\src\main\webapp\WEB-INF\img" />
+    </key>
+    <key name="OPEN_URL_DIALOG">
+      <recent name="https://www.jd.com/?cu=true&amp;utm_source=baidu-pinzhuan&amp;utm_medium=cpc&amp;utm_campaign=t_288551095_baidupinzhuan&amp;utm_term=0f3d30c8dba7459bb52f2eb5eba8ac7d_0_81ac291345364832b9515ba31c5100e7" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\zhangkaiqi\Desktop\test\sql" />
+      <recent name="C:\Users\zhangkaiqi\Desktop\test\src\main\webapp\client" />
       <recent name="C:\Users\zhangkaiqi\Desktop\test\src\main\webapp" />
-      <recent name="C:\Users\zhangkaiqi\Desktop\test\src\main" />
+      <recent name="C:\Users\zhangkaiqi\Desktop\test\src\main\webapp\WEB-INF" />
     </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.dao" />
@@ -117,10 +131,26 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.241">
+    <configuration name="MainTest.text1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.test" />
+      <option name="MAIN_CLASS_NAME" value="com.test.MainTest" />
+      <option name="METHOD_NAME" value="text1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tomcat 9.0.241" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.241" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
-      <option name="COMMON_VM_ARGUMENTS" value="-Dfile.encoding=UTF-8" />
       <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="UPDATING_POLICY" value="update-resources" />
       <deployment>
         <artifact name="test:war exploded">
           <settings>
@@ -129,7 +159,7 @@
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="Unnamed_test_6" />
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_test_7" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -253,6 +283,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.MainTest.text1" />
+      <item itemvalue="Tomcat Server.Tomcat 9.0.241" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.MainTest.text1" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SQLScriptSettings">
+    <option name="matrix">
+      <map>
+        <entry key="MYSQL.CreateComplete" value="UseSurrogates=1, IgnoreDefiner=1, CreateOrReplace=1, CreateIfNotExists=1" />
+      </map>
+    </option>
+    <option name="outputLayout" value="File per object.groovy" />
+    <option name="outputPath" value="C:\Users\zhangkaiqi\Desktop\test" />
   </component>
   <component name="ServiceViewManager">
     <option name="allServicesViewState">
@@ -261,27 +309,7 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fecd5d1d" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fecd5d1d" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@4a277595" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fecd5d1d" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@629c4029" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fecd5d1d" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@58c4b94c" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fecd5d1d" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@182f75e0" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@49239b97" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -302,7 +330,18 @@
       <workItem from="1574603388276" duration="6762000" />
       <workItem from="1574653504976" duration="21813000" />
       <workItem from="1574681074276" duration="13714000" />
-      <workItem from="1574734636623" duration="21471000" />
+      <workItem from="1574734636623" duration="29029000" />
+      <workItem from="1574814398318" duration="24001000" />
+      <workItem from="1574848300457" duration="1590000" />
+      <workItem from="1574922446286" duration="85000" />
+      <workItem from="1574923786270" duration="4191000" />
+      <workItem from="1574939398893" duration="12000" />
+      <workItem from="1575008874233" duration="38000" />
+      <workItem from="1575534949464" duration="57135000" />
+      <workItem from="1575701266898" duration="2039000" />
+      <workItem from="1575706839873" duration="5171000" />
+      <workItem from="1575791653669" duration="25144000" />
+      <workItem from="1575854031874" duration="3634000" />
     </task>
     <servers />
   </component>

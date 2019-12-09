@@ -7,4 +7,13 @@
         <id property="fcId" column="fc_id"/>
         <result property="fcName" column="fc_name"/>
     </resultMap>
+    <resultMap id="foodclassifyMap" type="foodclassify" extends="baseFoodclassifyMap">
+        <collection property="food" resultMap="com.dao.FoodDao.baseFoodMap"/>
+    </resultMap>
+    <select id="selectAllByFoodclassify" resultMap="foodclassifyMap">
+        select *
+        from food,
+             foodclassify
+        where food.food_classify = foodclassify.fc_id
+    </select>
 </mapper>

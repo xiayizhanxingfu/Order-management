@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>tradingRecord</title>
+        <script src="/test/js/jquery-3.4.1.js"></script>
+        <script src="/test/js/function.js"></script>
+        <link href="/test/css/shopCar.css" rel="stylesheet" type="text/css">
+
+    </head>
+    <body>
+        <div id="head">
+            <div id="navigation">
+                <ul>
+                    <a href="/test/client/index.html">
+                        <li>首页</li>
+                    </a>
+                    <a href="/test/client/shopping.html">
+                        <li>购物</li>
+                    </a>
+                    <a href="/test/client/shoppingCar.html">
+                        <li>购物车</li>
+                    </a>
+                    <a href="/test/client/tradingRecord.html">
+                        <li>交易记录</li>
+                    </a>
+                    <a>
+                        <li>关于我们</li>
+                    </a>
+                </ul>
+                <div id="user">
+                    <img src="/test/img/head.jpg">
+                    <div>
+                        <p></p>
+                        <div>
+                            <p id="login">登录</p>
+                            <p id="exit">注销</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="contextBody">
+            <div id="top">
+                <div id="search">
+                    <label><input type="text" placeholder="关键字"></label>
+                    <label><input type="radio" name="sort" value="-1">价格降序</label>
+                    <label><input type="radio" name="sort" value="1" checked="checked">价格升序</label>
+                    <label>
+                        <select name="status">
+                            <option value="1">己付款</option>
+                            <option value="2">未上菜</option>
+                            <option value="3">完成交易</option>
+                        </select>
+                    </label>
+                    <label id="startSearch">查找</label>
+                </div>
+                <div id="shopCarList">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>图片</th>
+                                <th>详细</th>
+                                <th>数量</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--                            <tr>-->
+                            <!--                                <td>-->
+                            <!--                                    <label>-->
+                            <!--                                        <input type="checkbox">-->
+                            <!--                                        <img src="/test/img/cai.jpg"/>-->
+                            <!--                                    </label>-->
+                            <!--                                </td>-->
+                            <!--                                <td>-->
+                            <!--                                    <p>牛肉菜</p>-->
+                            <!--                                    <span>￥69.9</span>-->
+                            <!--                                    <del>￥69.9</del>-->
+                            <!--                                </td>-->
+                            <!--                                <td>-->
+                            <!--                                    <input type="number">-->
+                            <!--                                </td>-->
+                            <!--                            </tr>-->
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="page">
+                    <!--                    <span>上一页</span>-->
+                    <!--                    <a href="#">1</a>-->
+                    <!--                    <a href="#">2</a>-->
+                    <!--                    <a href="#">3</a>-->
+                    <!--                    <a href="#">4</a>-->
+                    <!--                    <a href="#">5</a>-->
+                    <!--                    <a href="#">6</a>-->
+                    <!--                    <a href="#">7</a>-->
+                    <!--                    <a href="#">8</a>-->
+                    <!--                    <span>下一页</span>-->
+                </div>
+            </div>
+
+        </div>
+        <div id="foot">
+            <p>联系我们</p>
+            <p>了解更多的产品请拨打:400 888 8888 | 咨询服务请拨打:400 999 9999</p>
+        </div>
+        <script type="application/javascript">
+            $(function () {
+                init();
+                shopCarList(1);
+                $("#startSearch").on("click", shopCarList);
+            });
+
+            function shopCarList(page) {
+                console.log($("#search label input").val());
+                if (typeof page === "object") {
+                    page = 1;
+                }
+                $.ajax({
+                    url: baseUrl + "client/orderformPage",
+                    type: "POST",
+                    data: {
+                        "key": $("#search label input").val(),
+                        "sort": $("[name=sort]:checked").val(),
+                        "status": $("[name=status]").val(),
+                        "page": page
+                    },
+                    dataType: "JSON",
+                    success: function (json) {
+                        console.log(json);
+                        if (json.status === "error") {
+                            setCookie("users", '', -1);
+                            $("#user > div:nth-child(2) > p:nth-child(1)").text('请登录');
+                        } else {
+                            //商品列表
+                            //清空原来信息
+                            $("#shopCarList  table > tbody *").remove();
+                            var view = "";
+                            for (var i = 0; i < json.pageinfo.list.length; i++) {
+                                view += '<td>\n' +
+                                    '\t<label>\n' +
+                                    '\t    <img src="' + json.pageinfo.list[i].food.foodUrl + '"/>\n' +
+                                    '\t</label>\n' +
+                                    '</td>';
+                                view += '<td>\n' +
+                                    '\t<p>' + json.pageinfo.list[i].food.foodName + '</p>\n' +
+                                    '\t<span>￥' + json.pageinfo.list[i].food.foodPrice + '</span>\n' +
+                                    '\t<del>￥' + json.pageinfo.list[i].food.foodDprice + '</del>\n' +
+                                    '</td>';
+                                view += ' <td>' + json.pageinfo.list[i].size + '</td>';
+                                view = "<tr>" + view + "</tr>";
+                            }
+                            $("#shopCarList  table > tbody").append(view);
+                            //分页列表
+                            //清空原来信息
+                            $(".page *").remove();
+                            $(".page").append(pageinfoView(json));
+                            //分页绑定点击事件
+                            $(".page *").on("click", function () {
+                                shopCarList($(this).attr("page"));
+                            });
+                        }
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
